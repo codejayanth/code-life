@@ -1,7 +1,14 @@
 # code-life
 
-I design the data pipelines which recieve the data from different hardware devices. 
+Signup/ Login Module
 
-I used multiple programming languages like Python and Go and query language as a postgres
+The FastAPI is used to develop the REST APIs for signup and login APIs
 
-New line
+PostgreSQL is used as a database
+
+
+![alt text](image.png)
+
+The CRUD operations that are performed by the login or signup page will be bear by the database. 
+
+The Users table in the database will store the user details, the password is encrypted before writing into the database. 
