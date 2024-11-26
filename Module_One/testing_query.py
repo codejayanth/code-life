@@ -1,4 +1,5 @@
 import psycopg2
+from datetime import datetime
 
 conn = psycopg2.connect(database = "postgres", 
                         user = "postgres", 
@@ -7,11 +8,17 @@ conn = psycopg2.connect(database = "postgres",
                         port = 5432)
 
 
+def Execute_SQL_Statement(data_one, data_two, typee):
+    curr = conn.cursor()
+    if typee == 'INSERT':
+        timee = datetime.now()
+        curr.execute('INSERT INTO Users VALUES (email, data_two);')
+        conn.close()
+    else:
+        curr.execute('SELECT email, password FROM Users WHERE email = email AND password = password;')
+        rows = curr.fetchall()
+        print(rows)
+        conn.close()
 
-curr = conn.cursor()
-curr.execute('SELECT * FROM Users;')
-rows = curr.fetchall()
-conn.commit()
-conn.close()
-for row in rows:
-    print(row)
+data = Execute_SQL_Statement('rama@gmail.com', '123456', 'INSERT')
+print(data)
