@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Student Projects Platform{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="min-h-screen bg-gray-50">
+    <header class="bg-white shadow-sm">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center gap-2">
+                    <i data-lucide="graduation-cap" class="w-8 h-8 text-blue-600"></i>
+                    <a href="{{ url_for('index') }}" class="text-xl font-bold text-gray-900">BeOnYourOwn</a>
+                </div>
+                
+                <div class="flex items-center gap-6">
+                    <a href="{{ url_for('index') }}" class="text-gray-600 hover:text-gray-900">Projects</a>
+                    {% if current_user.is_authenticated %}
+                        {% if current_user.user_type == 'student' %}
+                            <a href="{{ url_for('post_project') }}" class="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                                <i data-lucide="briefcase" class="w-4 h-4"></i>
+                                Post Project
+                            </a>
+                        {% endif %}
+                        <a href="{{ url_for('profile') }}" class="text-gray-600 hover:text-gray-900">
+                            <i data-lucide="user-circle" class="w-6 h-6"></i>
+                        </a>
+                        <a href="{{ url_for('logout') }}" class="text-gray-600 hover:text-gray-900">Logout</a>
+                    {% else %}
+                        <a href="{{ url_for('login') }}" class="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                            Login / Register
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="mb-4 p-4 rounded-lg {% if category == 'error' %}bg-red-100 text-red-700{% else %}bg-green-100 text-green-700{% endif %}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="bg-white border-t mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="text-center text-gray-500">
+                © 2025 BeOnYourOwn
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
